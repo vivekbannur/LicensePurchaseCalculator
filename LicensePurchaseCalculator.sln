@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36717.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicensePurchaseCalculator", "LicensePurchaseCalculator\LicensePurchaseCalculator.csproj", "{DC7FE009-1D1A-4068-9082-BC63218B1B95}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicensePurchaseCalculator.Tests", "LicensePurchaseCalculator.Tests\LicensePurchaseCalculator.Tests.csproj", "{BA57F564-C2EA-4EE9-9647-3B4C8BD8BF46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
