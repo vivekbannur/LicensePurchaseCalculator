@@ -47,5 +47,44 @@ namespace LicensePurchaseCalculator.Tests
             var result = _sut.CalculateMinimumLicenses(data, 374);
             Assert.Equal(2, result);
         }
+
+        [Fact]
+        public void MixedApplicationIds_IgnoresOtherApps_Requires1Copy()
+        {
+            var data = new[]
+            {
+                new AppInstallationModel { ComputerID = 1, UserID = 1, ApplicationID = 999, ComputerType = "LAPTOP", Comment="SystemA" },
+
+                new AppInstallationModel { ComputerID = 2, UserID = 1, ApplicationID = 374, ComputerType = "LAPTOP", Comment="SystemA" },
+                new AppInstallationModel { ComputerID = 3, UserID = 1, ApplicationID = 374, ComputerType = "DESKTOP", Comment="SystemA" },
+            };
+            var result = _sut.CalculateMinimumLicenses(data, 374);
+            Assert.Equal(1, result); // only rows for 374 count
+        }
+
+        [Fact]
+        public void OnlyDesktops_SameUser_TwoDesktops_Requires2Copies()
+        {
+            var data = new[]
+            {
+                new AppInstallationModel { ComputerID = 1, UserID = 1, ApplicationID = 374, ComputerType = "DESKTOP", Comment="SystemA" },
+                new AppInstallationModel { ComputerID = 2, UserID = 1, ApplicationID = 374, ComputerType = "DESKTOP", Comment="SystemA" },
+            };
+            var result = _sut.CalculateMinimumLicenses(data, 374);
+            Assert.Equal(2, result);
+        }
+
+        [Fact]
+        public void OnlyLaptops_ThreeLaptops_Requires2Copies()
+        {
+            var data = new[]
+            {
+                new AppInstallationModel { ComputerID = 1, UserID = 1, ApplicationID = 374, ComputerType = "LAPTOP", Comment="SystemA" },
+                new AppInstallationModel { ComputerID = 2, UserID = 1, ApplicationID = 374, ComputerType = "LAPTOP", Comment="SystemA" },
+                new AppInstallationModel { ComputerID = 3, UserID = 1, ApplicationID = 374, ComputerType = "LAPTOP", Comment="SystemA" },
+            };
+            var result = _sut.CalculateMinimumLicenses(data, 374);
+            Assert.Equal(2, result);
+        }
     }
 }
