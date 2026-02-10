@@ -26,8 +26,16 @@ namespace LicensePurchaseCalculator
                 return 2;
             }
             _logger.LogInformation("License calculation started.");
-            
+            var path = args[0];
+            var appId = (args.Length >= 2 && int.TryParse(args[1], out var parsed)) ? parsed : 374;
+
+            _logger.LogInformation("Reading: {Path}, ApplicationID: {AppId}", path, appId);
+            // Stream CSV records one-by-one (no full file load into memory)
+            var records = _reader.ReadInstallations(path);
+            var result = _calculator.CalculateMinimumLicenses(records, appId);
             _logger.LogInformation("License calculation completed successfully.");
+            _logger.LogInformation("Application: {AppId}", appId);
+            _logger.LogInformation("Minimum licenses required: {}", result);
             return 0;
         }
     }

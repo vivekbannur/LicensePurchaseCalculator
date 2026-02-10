@@ -1,7 +1,8 @@
 {
   "profiles": {
     "LicensePurchaseCalculator": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Flexera\\code test 2\\sample-small.csv\" 374"
     }
   }
 }

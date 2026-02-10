@@ -2,14 +2,27 @@
 using LicensePurchaseCalculator.Implementations.Providers;
 using LicensePurchaseCalculator.Interfaces.Providers;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 public class Program
 {
     public static void Main(string[] args)
     {
-        var host = CreateHostBuilder(args).Build();
+        try
+        {
+            var host = CreateHostBuilder(args).Build();
             var app = host.Services.GetRequiredService<App>();
             app.Run(args);
+        }
+        catch (FileNotFoundException ex)
+        {
+            Console.WriteLine($"File not found: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Unexpected error: {ex.Message}");
+        }
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
