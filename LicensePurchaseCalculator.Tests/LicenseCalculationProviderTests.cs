@@ -1,5 +1,6 @@
 using LicensePurchaseCalculator.Implementations.Providers;
 using LicensePurchaseCalculator.Models;
+using LicensePurchaseCalculator.Constants;
 
 namespace LicensePurchaseCalculator.Tests
 {
@@ -12,8 +13,8 @@ namespace LicensePurchaseCalculator.Tests
         {
             var data = new[]
             {
-                new AppInstallationModel { ComputerID = 1, UserID = 1, ApplicationID = 374, ComputerType = "LAPTOP",  Comment="A" },
-                new AppInstallationModel { ComputerID = 2, UserID = 1, ApplicationID = 374, ComputerType = "DESKTOP", Comment="A" },
+                new AppInstallationModel { ComputerID = 1, UserID = 1, ApplicationID = 374, ComputerType = ApplicationConstants.Laptop,  Comment="A" },
+                new AppInstallationModel { ComputerID = 2, UserID = 1, ApplicationID = 374, ComputerType = ApplicationConstants.Desktop, Comment="A" },
             };
             var result = _sut.CalculateMinimumLicenses(data, 374);
             Assert.Equal(1, result);
@@ -24,11 +25,11 @@ namespace LicensePurchaseCalculator.Tests
         {
             var data = new[]
             {
-                new AppInstallationModel { ComputerID = 1, UserID = 1, ApplicationID = 374, ComputerType = "LAPTOP",  Comment="A" },
-                new AppInstallationModel { ComputerID = 2, UserID = 1, ApplicationID = 374, ComputerType = "DESKTOP", Comment="A" },
+                new AppInstallationModel { ComputerID = 1, UserID = 1, ApplicationID = 374, ComputerType = ApplicationConstants.Laptop,  Comment="A" },
+                new AppInstallationModel { ComputerID = 2, UserID = 1, ApplicationID = 374, ComputerType = ApplicationConstants.Desktop, Comment="A" },
 
-                new AppInstallationModel { ComputerID = 3, UserID = 2, ApplicationID = 374, ComputerType = "DESKTOP", Comment="A" },
-                new AppInstallationModel { ComputerID = 4, UserID = 2, ApplicationID = 374, ComputerType = "DESKTOP", Comment="A" },
+                new AppInstallationModel { ComputerID = 3, UserID = 2, ApplicationID = 374, ComputerType = ApplicationConstants.Desktop, Comment="A" },
+                new AppInstallationModel { ComputerID = 4, UserID = 2, ApplicationID = 374, ComputerType = ApplicationConstants.Desktop, Comment="A" },
             };
             var result = _sut.CalculateMinimumLicenses(data, 374);
             Assert.Equal(3, result);
@@ -39,10 +40,10 @@ namespace LicensePurchaseCalculator.Tests
         {
             var data = new[]
             {
-                new AppInstallationModel { ComputerID = 1, UserID = 1, ApplicationID = 374, ComputerType = "LAPTOP",  Comment="SystemA" },
+                new AppInstallationModel { ComputerID = 1, UserID = 1, ApplicationID = 374, ComputerType = ApplicationConstants.Laptop,  Comment="SystemA" },
 
-                new AppInstallationModel { ComputerID = 2, UserID = 2, ApplicationID = 374, ComputerType = "DESKTOP", Comment="SystemA" },
-                new AppInstallationModel { ComputerID = 2, UserID = 2, ApplicationID = 374, ComputerType = "desktop", Comment="SystemB" }, // duplicate per example
+                new AppInstallationModel { ComputerID = 2, UserID = 2, ApplicationID = 374, ComputerType = ApplicationConstants.Desktop, Comment="SystemA" },
+                new AppInstallationModel { ComputerID = 2, UserID = 2, ApplicationID = 374, ComputerType = ApplicationConstants.Desktop.ToLower(), Comment="SystemB" }, // duplicate per example
             };
             var result = _sut.CalculateMinimumLicenses(data, 374);
             Assert.Equal(2, result);
@@ -53,10 +54,10 @@ namespace LicensePurchaseCalculator.Tests
         {
             var data = new[]
             {
-                new AppInstallationModel { ComputerID = 1, UserID = 1, ApplicationID = 999, ComputerType = "LAPTOP", Comment="SystemA" },
+                new AppInstallationModel { ComputerID = 1, UserID = 1, ApplicationID = 999, ComputerType = ApplicationConstants.Laptop, Comment="SystemA" },
 
-                new AppInstallationModel { ComputerID = 2, UserID = 1, ApplicationID = 374, ComputerType = "LAPTOP", Comment="SystemA" },
-                new AppInstallationModel { ComputerID = 3, UserID = 1, ApplicationID = 374, ComputerType = "DESKTOP", Comment="SystemA" },
+                new AppInstallationModel { ComputerID = 2, UserID = 1, ApplicationID = 374, ComputerType = ApplicationConstants.Laptop, Comment="SystemA" },
+                new AppInstallationModel { ComputerID = 3, UserID = 1, ApplicationID = 374, ComputerType = ApplicationConstants.Desktop, Comment="SystemA" },
             };
             var result = _sut.CalculateMinimumLicenses(data, 374);
             Assert.Equal(1, result); // only rows for 374 count
@@ -67,8 +68,8 @@ namespace LicensePurchaseCalculator.Tests
         {
             var data = new[]
             {
-                new AppInstallationModel { ComputerID = 1, UserID = 1, ApplicationID = 374, ComputerType = "DESKTOP", Comment="SystemA" },
-                new AppInstallationModel { ComputerID = 2, UserID = 1, ApplicationID = 374, ComputerType = "DESKTOP", Comment="SystemA" },
+                new AppInstallationModel { ComputerID = 1, UserID = 1, ApplicationID = 374, ComputerType = ApplicationConstants.Desktop, Comment="SystemA" },
+                new AppInstallationModel { ComputerID = 2, UserID = 1, ApplicationID = 374, ComputerType = ApplicationConstants.Desktop, Comment="SystemA" },
             };
             var result = _sut.CalculateMinimumLicenses(data, 374);
             Assert.Equal(2, result);
@@ -79,9 +80,9 @@ namespace LicensePurchaseCalculator.Tests
         {
             var data = new[]
             {
-                new AppInstallationModel { ComputerID = 1, UserID = 1, ApplicationID = 374, ComputerType = "LAPTOP", Comment="SystemA" },
-                new AppInstallationModel { ComputerID = 2, UserID = 1, ApplicationID = 374, ComputerType = "LAPTOP", Comment="SystemA" },
-                new AppInstallationModel { ComputerID = 3, UserID = 1, ApplicationID = 374, ComputerType = "LAPTOP", Comment="SystemA" },
+                new AppInstallationModel { ComputerID = 1, UserID = 1, ApplicationID = 374, ComputerType = ApplicationConstants.Laptop, Comment="SystemA" },
+                new AppInstallationModel { ComputerID = 2, UserID = 1, ApplicationID = 374, ComputerType = ApplicationConstants.Laptop, Comment="SystemA" },
+                new AppInstallationModel { ComputerID = 3, UserID = 1, ApplicationID = 374, ComputerType = ApplicationConstants.Laptop, Comment="SystemA" },
             };
             var result = _sut.CalculateMinimumLicenses(data, 374);
             Assert.Equal(2, result);

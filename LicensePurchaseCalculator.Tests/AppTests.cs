@@ -37,9 +37,7 @@ namespace LicensePurchaseCalculator.Tests
                 .Returns(5);
 
             var app = new App(readerMock.Object, calcMock.Object, loggerMock.Object);
-
             var result = app.Run(new[] { "test.csv", "374" });
-
             Assert.Equal(0, result);
         }
 
@@ -61,9 +59,7 @@ namespace LicensePurchaseCalculator.Tests
                 .Returns(1);
 
             var app = new App(readerMock.Object, calcMock.Object, loggerMock.Object);
-
             var result = app.Run(new[] { "test.csv" });
-
             Assert.Equal(0, result);
         }
     }

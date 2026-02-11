@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Formats.Asn1;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LicensePurchaseCalculator.Interfaces.Providers;
-using LicensePurchaseCalculator.Models;
+﻿using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
+using LicensePurchaseCalculator.Interfaces.Providers;
+using LicensePurchaseCalculator.Models;
 
 namespace LicensePurchaseCalculator.Implementations.Providers
 {

@@ -1,37 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LicensePurchaseCalculator.Interfaces.Providers;
+﻿using LicensePurchaseCalculator.Interfaces.Providers;
 using LicensePurchaseCalculator.Models;
 using LicensePurchaseCalculator.Utilities;
-using Microsoft.Extensions.Logging;
+using LicensePurchaseCalculator.Constants;
 
 namespace LicensePurchaseCalculator.Implementations.Providers
 {
     public class LicenseCalculationProvider : ILicenseCalculationProvider
     {
-        //private readonly ILogger<LicenseCalculationProvider> _logger;
-        public LicenseCalculationProvider()//ILogger<LicenseCalculationProvider> logger)
-        {
-            //_logger = logger;
-        }
         /// Calculates the minimum number of licenses required per application.
         /// Processes installation records in a streaming manner to support very large files.
         /// Performs filtering, deduplication, and per-user aggregation.
         public int CalculateMinimumLicenses(IEnumerable<AppInstallationModel> stream, int applicationId)
         {
-            var filteredData = FilterByApp(stream, applicationId);
+            int counter = 0;
+            var filteredData = FilterByApp(stream, applicationId, counter);
             var uniqueData = RemoveDuplicates(filteredData);
             var perUser = AggregatePerUser(uniqueData);
             var numberOfLicenses = SumLicenses(perUser);
             return numberOfLicenses;
         }
-        internal IEnumerable<AppInstallationModel> FilterByApp(IEnumerable<AppInstallationModel> stream, int appId)
+        internal IEnumerable<AppInstallationModel> FilterByApp(IEnumerable<AppInstallationModel> stream, int appId,int counter)
         {
             foreach (var row in stream)
             {
+                counter++;
+                if (counter % 1000000 == 0)
+                    Console.WriteLine($"Processed {counter} rows...");
                 if (row.ApplicationID == appId)
                     yield return row;
             }
@@ -60,9 +54,9 @@ namespace LicensePurchaseCalculator.Implementations.Providers
 
                 var device = perUser[row.UserID];
 
-                if (row.ComputerType.Equals("DESKTOP", StringComparison.OrdinalIgnoreCase))
+                if (row.ComputerType.Equals(ApplicationConstants.Desktop, StringComparison.OrdinalIgnoreCase))
                     device.Desktops++;
-                else if (row.ComputerType.Equals("LAPTOP", StringComparison.OrdinalIgnoreCase))
+                else if (row.ComputerType.Equals(ApplicationConstants.Laptop, StringComparison.OrdinalIgnoreCase))
                     device.Laptops++;
             }
             return perUser;
