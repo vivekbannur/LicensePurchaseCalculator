@@ -32,29 +32,29 @@ The solution is designed as a production-ready, streaming, memory-efficient util
 A sample CSV file is included in the data folder.
 If using a large file, place it inside the data folder and update the command accordingly.
 If no Application ID is provided, the application defaults to 374.
-A sample configuration is provided below:
-dotnet run -- ..\data\sample-small.csv 374
+A sample configuration: dotnet run -- ..\data\sample-small.csv 374
 
 ### From Visual Studio
 1. Open launchSettings.json
 2. Update the commandLineArgs value as needed.
+
 A sample CSV file is included in the data folder.
 If using a large file, place it inside the data folder and update the path accordingly.
 If no Application ID is provided, the application defaults to 374.
-A sample configuration is provided below:
-"commandLineArgs": "..\\data\\sample-small.csv 374"
+A sample configuration: "commandLineArgs": "..\\data\\sample-small.csv 374"
 
 ### Logging Output Example
-License calculation started.
-Reading: ..\data\sample-small.csv | ApplicationID: 374
-License calculation completed successfully.
-Minimum licenses required: 190
+- License calculation started.
+- Reading: ..\data\sample-small.csv | ApplicationID: 374
+- License calculation completed successfully.
+- Minimum licenses required: 190
 
 ### Running Tests
 
 ### From Terminal
 From the solution root directory, run:
 dotnet test
+
 This will automatically discover and execute all test projects.
 
 ### From Visual Studio
